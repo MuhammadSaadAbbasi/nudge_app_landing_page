@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nudge — Take Back Your Time</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f5f2ee;
+      --ink: #1a1714;
+      --muted: #8a8480;
+      --accent: #d4500a;
+      --accent-light: #fde8dc;
+      --surface: #efecea;
+      --border: #dedad6;
+      --white: #faf9f7;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Instrument Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(245,242,238,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    nav a.nav-cta {
+      background: var(--ink);
+      color: var(--white);
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    nav a.nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 120px 48px 80px;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-left { animation: slideUp 0.9s cubic-bezier(.16,1,.3,1) both; }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: blink 2s infinite;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      font-weight: 900;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      color: var(--ink);
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 420px;
+      margin-bottom: 40px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.22s;
+      border: 2px solid transparent;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212,80,10,0.25);
+    }
+
+    .btn-primary svg { width: 18px; height: 18px; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--ink);
+      padding: 14px 24px;
+      border-radius: 100px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border: 1.5px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--ink); background: var(--surface); }
+
+    /* Phone mockup */
+    .hero-right {
+      display: flex;
+      justify-content: center;
+      animation: slideUp 0.9s 0.15s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    .phone-wrap {
+      position: relative;
+      width: 280px;
+    }
+
+    .phone {
+      width: 280px;
+      height: 560px;
+      background: var(--ink);
+      border-radius: 44px;
+      padding: 14px;
+      box-shadow:
+        0 40px 80px rgba(26,23,20,0.18),
+        0 0 0 1px rgba(26,23,20,0.08);
+      position: relative;
+    }
+
+    .phone-screen {
+      background: var(--white);
+      border-radius: 32px;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* App screen content */
+    .app-screen {
+      padding: 28px 20px 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: #faf9f7;
+    }
+
+    .app-statusbar {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      color: #999;
+      margin-bottom: 20px;
+      font-family: 'Instrument Sans', sans-serif;
+    }
+
+    .app-header-txt {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .app-sub-txt { font-size: 0.72rem; color: var(--muted); margin-bottom: 20px; }
+
+    /* Usage ring */
+    .usage-ring-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .ring-svg { width: 100px; height: 100px; }
+
+    .ring-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-top: -6px;
+    }
+
+    .ring-sub { font-size: 0.65rem; color: var(--muted); }
+
+    /* App list */
+    .app-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      margin-bottom: 6px;
+      background: var(--surface);
+    }
+
+    .app-dot {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .app-item-info { flex: 1; }
+    .app-item-name { font-size: 0.72rem; font-weight: 600; color: var(--ink); }
+    .app-item-bar-wrap { height: 3px; background: var(--border); border-radius: 2px; margin-top: 3px; }
+    .app-item-bar { height: 3px; border-radius: 2px; }
+    .app-item-time { font-size: 0.65rem; color: var(--muted); }
+
+    /* Overlay nudge card */
+    .nudge-overlay {
+      position: absolute;
+      bottom: 20px; left: 14px; right: 14px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 14px 16px;
+      box-shadow: 0 8px 32px rgba(26,23,20,0.12);
+      animation: floatCard 3s ease-in-out infinite;
+    }
+
+    .nudge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 100px;
+      margin-bottom: 6px;
+    }
+
+    .nudge-overlay-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .nudge-overlay-sub { font-size: 0.65rem; color: var(--muted); margin-bottom: 10px; }
+
+    .nudge-overlay-btn {
+      background: var(--ink);
+      color: var(--white);
+      border: none;
+      width: 100%;
+      padding: 7px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: default;
+    }
+
+    /* Floating badge */
+    .phone-badge {
+      position: absolute;
+      top: 40px;
+      right: -40px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink);
+      box-shadow: 0 8px 24px rgba(26,23,20,0.08);
+      white-space: nowrap;
+      animation: floatBadge 4s ease-in-out infinite;
+    }
+
+    .phone-badge-2 {
+      position: absolute;
+      bottom: 80px;
+      left: -50px;
+      background: var(--accent);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: white;
+      box-shadow: 0 8px 24px rgba(212,80,10,0.3);
+      white-space: nowrap;
+      animation: floatBadge 4s 1.5s ease-in-out infinite;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 100px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 60px;
+      max-width: 560px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .feature-card {
+      background: var(--white);
+      padding: 36px 32px;
+      transition: background 0.2s;
+    }
+
+    .feature-card:hover { background: var(--surface); }
+
+    .feature-icon {
+      width: 48px; height: 48px;
+      background: var(--accent-light);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    .feature-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      padding: 80px 48px;
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .how-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .how .section-eyebrow { color: var(--accent); }
+    .how .section-title { color: var(--white); margin-bottom: 56px; }
+
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .step-box {
+      padding: 32px 28px;
+      background: var(--ink);
+      transition: background 0.2s;
+    }
+
+    .step-box:hover { background: #252219; }
+
+    .step-num-big {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--accent);
+      opacity: 0.5;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .step-box-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+
+    .step-box-desc { font-size: 0.84rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 120px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .cta-title em { color: var(--accent); font-style: italic; }
+
+    .cta-sub { font-size: 0.95rem; color: var(--muted); margin-top: 14px; }
+
+    .cta-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+
+    .version-tag {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: monospace;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--ink);
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    /* ── DIVIDER LINE ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes floatBadge {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      animation: reveal 0.7s cubic-bezier(.16,1,.3,1) forwards;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; }
+      .hero-sub { margin: 0 auto 32px; }
+      .hero-btns { justify-content: center; }
+      .hero-right { order: -1; }
+      .phone-badge, .phone-badge-2 { display: none; }
+      .features { padding: 60px 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .how { padding: 60px 24px; }
+      .steps-row { grid-template-columns: 1fr 1fr; }
+      .cta-section { grid-template-columns: 1fr; padding: 80px 24px; }
+      .cta-right { align-items: flex-start; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    @media (max-width: 540px) {
+      .steps-row { grid-template-columns: 1fr; }
+      .phone { width: 240px; height: 480px; }
+      .phone-wrap { width: 240px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Nudge<span>.</span></a>
+    <a href="#download" class="nav-cta">Download Free</a>
+  </nav>
+
+  <!-- HERO -->
+  <section>
+    <div class="hero">
+      <div class="hero-left">
+        <div class="hero-tag">Android App — Free & Open Source</div>
+        <h1>Your phone<br/>should work<br/>for <em>you.</em></h1>
+        <p class="hero-sub">Nudge gently interrupts your mindless scrolling with a soft overlay — giving you a moment to pause, reflect, and decide if this is really how you want to spend your time.</p>
+        <div class="hero-btns">
+          <a href="#download" class="btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 3v13M7 11l5 5 5-5M3 19h18"/>
+            </svg>
+            Download APK
+          </a>
+          <a href="#features" class="btn-ghost">See Features →</a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="phone-wrap">
+          <!-- Floating badges -->
+          <div class="phone-badge">📊 3h 20m saved today</div>
+          <div class="phone-badge-2">✓ Nudge sent!</div>
+
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="app-screen">
+                <div class="app-statusbar">
+                  <span>9:41</span>
+                  <span>●●● 100%</span>
+                </div>
+                <div class="app-header-txt">Today</div>
+                <div class="app-sub-txt">Tuesday, March 24</div>
+
+                <!-- Usage ring -->
+                <div class="usage-ring-wrap">
+                  <svg class="ring-svg" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#efecea" stroke-width="8"/>
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#d4500a" stroke-width="8"
+                      stroke-dasharray="251.2" stroke-dashoffset="80"
+                      stroke-linecap="round" transform="rotate(-90 50 50)"/>
+                  </svg>
+                  <div class="ring-label">2h 18m</div>
+                  <div class="ring-sub">of 3h daily limit</div>
+                </div>
+
+                <!-- App list -->
+                <div class="app-item">
+                  <div class="app-dot" style="background:#FF6B6B;"></div>
+                  <div class="app-item-info">
+                    <div class="app-item-name">Instagram</div>
+                    <div class="app-item-bar-wrap">
+                      <div class="app-item-bar" style="width:78%;background:#FF6B6B;"></div>
+                    </div>
+                  </div>
+                  <div class="app-item-time">58m</div>
+                </div>
+                <div class="app-item">
+                  <div class="app-dot" style="background:#4ECDC4;"></div>
+                  <div class="app-item-info">
+                    <div class="app-item-name">YouTube</div>
+                    <div class="app-item-bar-wrap">
+                      <div class="app-item-bar" style="width:55%;background:#4ECDC4;"></div>
+                    </div>
+                  </div>
+                  <div class="app-item-time">42m</div>
+                </div>
+                <div class="app-item">
+                  <div class="app-dot" style="background:#45B7D1;"></div>
+                  <div class="app-item-info">
+                    <div class="app-item-name">Twitter</div>
+                    <div class="app-item-bar-wrap">
+                      <div class="app-item-bar" style="width:38%;background:#45B7D1;"></div>
+                    </div>
+                  </div>
+                  <div class="app-item-time">28m</div>
+                </div>
+
+                <!-- Nudge overlay card -->
+                <div class="nudge-overlay">
+                  <div class="nudge-chip">● Nudge</div>
+                  <div class="nudge-overlay-title">Still scrolling?</div>
+                  <div class="nudge-overlay-sub">You've been on Instagram for 30 mins.</div>
+                  <button class="nudge-overlay-btn">Take a Break ✓</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="section-eyebrow">What it does</div>
+    <div class="section-title">Everything you need to<br/>build better habits.</div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <div class="feature-title">Soft Overlay Nudges</div>
+        <div class="feature-desc">When you exceed your app limit, Nudge shows a gentle full-screen overlay — not a hard block. You still have the choice.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <div class="feature-title">Per-App Time Limits</div>
+        <div class="feature-desc">Set custom daily limits for social media, games, or any app. Nudge tracks usage in real-time using AccessibilityService.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Usage Insights</div>
+        <div class="feature-desc">See exactly where your time goes with clean daily breakdowns. No noise — just the data that matters.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📩</div>
+        <div class="feature-title">Accountability SMS</div>
+        <div class="feature-desc">Add a trusted contact. When you breach a limit, they get an SMS automatically. Real accountability, not just promises.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Breach Tracking</div>
+        <div class="feature-desc">Every override is logged. See your streak of mindful days and how often you chose to stop. Progress you can actually see.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Fully Private</div>
+        <div class="feature-desc">No accounts. No cloud sync. No tracking. Everything stays on your device. Your habits are your business.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <div class="how-inner">
+      <div class="section-eyebrow">How it works</div>
+      <div class="section-title">Simple by design.</div>
+      <div class="steps-row">
+        <div class="step-box">
+          <div class="step-num-big">01</div>
+          <div class="step-box-title">Install the APK</div>
+          <div class="step-box-desc">Download and install Nudge directly on your Android. Enable Accessibility Service when prompted.</div>
+        </div>
+        <div class="step-box">
+          <div class="step-num-big">02</div>
+          <div class="step-box-title">Set Your Limits</div>
+          <div class="step-box-desc">Choose which apps to track and set a daily time limit for each. Takes under a minute.</div>
+        </div>
+        <div class="step-box">
+          <div class="step-num-big">03</div>
+          <div class="step-box-title">Get Nudged</div>
+          <div class="step-box-desc">When you hit your limit, a calm overlay appears. Take a break — or consciously choose to continue.</div>
+        </div>
+        <div class="step-box">
+          <div class="step-num-big">04</div>
+          <div class="step-box-title">Build the Habit</div>
+          <div class="step-box-desc">Over days and weeks, awareness compounds. Small pauses lead to real change in how you use your phone.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / DOWNLOAD -->
+  <section class="cta-section" id="download">
+    <div>
+      <div class="cta-title">Ready to take back<br/>your <em>attention?</em></div>
+      <p class="cta-sub">Free. No account. Works offline. Android 7.0+</p>
+    </div>
+    <div class="cta-right">
+      <a href="nudge.apk" class="btn-primary" style="font-size:1rem;padding:16px 36px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M12 3v13M7 11l5 5 5-5M3 19h18"/>
+        </svg>
+        Download APK
+      </a>
+      <span class="version-tag">v1.0.0 · ~4 MB · Android</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Nudge<span>.</span></div>
+    <div>Built with ♥ using Kotlin + Jetpack Compose</div>
+    <div>Open Source · No Ads · No Tracking</div>
+  </footer>
+
+  <script>
+    // Scroll reveal for feature cards
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          e.target.style.animationDelay = (i * 0.08) + 's';
+          e.target.classList.add('reveal');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feature-card, .step-box').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
