@@ -7,20 +7,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg: #f5f2ee;
-      --ink: #1a1714;
-      --muted: #8a8480;
-      --accent: #d4500a;
-      --accent-light: #fde8dc;
-      --surface: #efecea;
-      --border: #dedad6;
-      --white: #faf9f7;
+      /* Matching the actual app theme from screenshot */
+      --bg: #f0f1f5;
+      --ink: #1a1d2e;
+      --muted: #7a7f9a;
+      --accent: #4a5580;
+      --accent-blue: #b8c0e0;
+      --accent-card: #c5cce8;
+      --surface: #e8eaf2;
+      --surface-card: #dde0ef;
+      --border: #d0d4e8;
+      --white: #f8f9fc;
+      --dark-btn: #2a3050;
+      --lavender: #8b96c8;
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--ink);
@@ -37,8 +40,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 20px 48px;
-      background: rgba(245,242,238,0.88);
-      backdrop-filter: blur(12px);
+      background: rgba(240,241,245,0.90);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
 
@@ -51,10 +54,10 @@
       text-decoration: none;
     }
 
-    .nav-logo span { color: var(--accent); }
+    .nav-logo span { color: var(--lavender); }
 
     nav a.nav-cta {
-      background: var(--ink);
+      background: var(--dark-btn);
       color: var(--white);
       padding: 10px 22px;
       border-radius: 100px;
@@ -85,7 +88,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--accent-light);
+      background: var(--surface-card);
       color: var(--accent);
       font-size: 0.78rem;
       font-weight: 600;
@@ -94,12 +97,13 @@
       padding: 6px 14px;
       border-radius: 100px;
       margin-bottom: 28px;
+      border: 1px solid var(--border);
     }
 
     .hero-tag::before {
       content: '';
       width: 6px; height: 6px;
-      background: var(--accent);
+      background: var(--lavender);
       border-radius: 50%;
       animation: blink 2s infinite;
     }
@@ -116,7 +120,7 @@
 
     h1 em {
       font-style: italic;
-      color: var(--accent);
+      color: var(--lavender);
     }
 
     .hero-sub {
@@ -127,17 +131,13 @@
       margin-bottom: 40px;
     }
 
-    .hero-btns {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
 
     .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: var(--ink);
+      background: var(--dark-btn);
       color: var(--white);
       padding: 14px 28px;
       border-radius: 100px;
@@ -145,13 +145,12 @@
       font-size: 0.95rem;
       text-decoration: none;
       transition: all 0.22s;
-      border: 2px solid transparent;
     }
 
     .btn-primary:hover {
       background: var(--accent);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(212,80,10,0.25);
+      box-shadow: 0 8px 24px rgba(74,85,128,0.25);
     }
 
     .btn-primary svg { width: 18px; height: 18px; }
@@ -171,29 +170,26 @@
       transition: all 0.2s;
     }
 
-    .btn-ghost:hover { border-color: var(--ink); background: var(--surface); }
+    .btn-ghost:hover { border-color: var(--accent); background: var(--surface); }
 
-    /* Phone mockup */
+    /* ── PHONE MOCKUP ── */
     .hero-right {
       display: flex;
       justify-content: center;
       animation: slideUp 0.9s 0.15s cubic-bezier(.16,1,.3,1) both;
     }
 
-    .phone-wrap {
-      position: relative;
-      width: 280px;
-    }
+    .phone-wrap { position: relative; width: 280px; }
 
     .phone {
       width: 280px;
-      height: 560px;
-      background: var(--ink);
+      height: 580px;
+      background: #2a2d3a;
       border-radius: 44px;
       padding: 14px;
       box-shadow:
-        0 40px 80px rgba(26,23,20,0.18),
-        0 0 0 1px rgba(26,23,20,0.08);
+        0 40px 80px rgba(26,29,46,0.22),
+        0 0 0 1px rgba(26,29,46,0.10);
       position: relative;
     }
 
@@ -205,154 +201,212 @@
       position: relative;
     }
 
-    /* App screen content */
+    /* ── App screen — matches screenshot ── */
     .app-screen {
-      padding: 28px 20px 20px;
+      padding: 0;
       height: 100%;
       display: flex;
       flex-direction: column;
-      background: #faf9f7;
+      background: #f0f1f5;
     }
 
     .app-statusbar {
       display: flex;
       justify-content: space-between;
-      font-size: 9px;
-      color: #999;
-      margin-bottom: 20px;
-      font-family: 'Instrument Sans', sans-serif;
+      font-size: 8px;
+      color: #555;
+      padding: 10px 20px 0;
     }
 
-    .app-header-txt {
+    .app-title-bar {
+      padding: 8px 20px 10px;
       font-family: 'Playfair Display', serif;
       font-size: 1.3rem;
       font-weight: 700;
       color: var(--ink);
+    }
+
+    /* Greeting card */
+    .app-greeting {
+      margin: 0 12px 10px;
+      background: #e8eaf2;
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    .app-greeting-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .app-greeting-sub {
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Daily nudges card — lavender/blue like screenshot */
+    .nudge-count-card {
+      margin: 0 12px 10px;
+      background: #b8c0e0;
+      border-radius: 16px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nudge-count-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #2a3050;
       margin-bottom: 4px;
     }
 
-    .app-sub-txt { font-size: 0.72rem; color: var(--muted); margin-bottom: 20px; }
+    .nudge-count-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #1a1d2e;
+      line-height: 1;
+    }
 
-    /* Usage ring */
-    .usage-ring-wrap {
+    .nudge-count-sub {
+      font-size: 0.65rem;
+      color: #3a4060;
+      margin-top: 4px;
+    }
+
+    .nudge-sparkles {
+      position: absolute;
+      top: 14px; right: 16px;
+      font-size: 1.4rem;
+      opacity: 0.7;
+    }
+
+    /* Tracked apps section */
+    .app-section-label {
+      padding: 4px 20px 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* Empty state */
+    .app-empty-state {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 18px;
+      justify-content: center;
+      padding: 14px 20px;
+      flex: 1;
     }
 
-    .ring-svg { width: 100px; height: 100px; }
+    .empty-icon {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin-bottom: 10px;
+    }
 
-    .ring-label {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      font-weight: 700;
+    .empty-icon-sq {
+      width: 16px; height: 16px;
+      background: #aab0c8;
+      border-radius: 3px;
+    }
+
+    .empty-icon-sq.plus {
+      background: transparent;
+      border: 2px solid #aab0c8;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px;
+      color: #aab0c8;
+    }
+
+    .empty-title {
+      font-size: 0.72rem;
+      font-weight: 600;
       color: var(--ink);
-      margin-top: -6px;
+      margin-bottom: 3px;
     }
 
-    .ring-sub { font-size: 0.65rem; color: var(--muted); }
+    .empty-sub { font-size: 0.6rem; color: var(--muted); text-align: center; }
 
-    /* App list */
-    .app-item {
+    .add-first-btn {
+      margin-top: 10px;
+      background: var(--dark-btn);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 7px 16px;
+      font-size: 0.65rem;
+      font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-radius: 10px;
-      margin-bottom: 6px;
-      background: var(--surface);
-    }
-
-    .app-dot {
-      width: 28px; height: 28px;
-      border-radius: 8px;
-      flex-shrink: 0;
-    }
-
-    .app-item-info { flex: 1; }
-    .app-item-name { font-size: 0.72rem; font-weight: 600; color: var(--ink); }
-    .app-item-bar-wrap { height: 3px; background: var(--border); border-radius: 2px; margin-top: 3px; }
-    .app-item-bar { height: 3px; border-radius: 2px; }
-    .app-item-time { font-size: 0.65rem; color: var(--muted); }
-
-    /* Overlay nudge card */
-    .nudge-overlay {
-      position: absolute;
-      bottom: 20px; left: 14px; right: 14px;
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: 20px;
-      padding: 14px 16px;
-      box-shadow: 0 8px 32px rgba(26,23,20,0.12);
-      animation: floatCard 3s ease-in-out infinite;
-    }
-
-    .nudge-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: var(--accent-light);
-      color: var(--accent);
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 100px;
-      margin-bottom: 6px;
-    }
-
-    .nudge-overlay-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 2px;
-    }
-
-    .nudge-overlay-sub { font-size: 0.65rem; color: var(--muted); margin-bottom: 10px; }
-
-    .nudge-overlay-btn {
-      background: var(--ink);
-      color: var(--white);
-      border: none;
-      width: 100%;
-      padding: 7px;
-      border-radius: 10px;
-      font-size: 0.7rem;
-      font-weight: 600;
+      gap: 4px;
       cursor: default;
     }
 
-    /* Floating badge */
+    /* Bottom nav */
+    .app-bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0 12px;
+      border-top: 1px solid #d8dae8;
+      background: #f0f1f5;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .nav-item-icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .nav-item-icon.active {
+      background: var(--dark-btn);
+    }
+
+    .nav-item-label { font-size: 0.55rem; color: var(--muted); }
+    .nav-item-label.active { color: var(--ink); font-weight: 600; }
+
+    /* Floating badges */
     .phone-badge {
       position: absolute;
       top: 40px;
-      right: -40px;
+      right: -44px;
       background: var(--white);
       border: 1.5px solid var(--border);
       border-radius: 14px;
       padding: 10px 14px;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 600;
       color: var(--ink);
-      box-shadow: 0 8px 24px rgba(26,23,20,0.08);
+      box-shadow: 0 8px 24px rgba(26,29,46,0.08);
       white-space: nowrap;
       animation: floatBadge 4s ease-in-out infinite;
     }
 
     .phone-badge-2 {
       position: absolute;
-      bottom: 80px;
-      left: -50px;
-      background: var(--accent);
+      bottom: 100px;
+      left: -54px;
+      background: var(--dark-btn);
       border-radius: 14px;
       padding: 10px 14px;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 600;
       color: white;
-      box-shadow: 0 8px 24px rgba(212,80,10,0.3);
+      box-shadow: 0 8px 24px rgba(42,48,80,0.3);
       white-space: nowrap;
       animation: floatBadge 4s 1.5s ease-in-out infinite;
     }
@@ -369,7 +423,7 @@
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--lavender);
       margin-bottom: 14px;
     }
 
@@ -403,7 +457,7 @@
 
     .feature-icon {
       width: 48px; height: 48px;
-      background: var(--accent-light);
+      background: var(--surface-card);
       border-radius: 14px;
       display: flex;
       align-items: center;
@@ -420,11 +474,7 @@
       letter-spacing: -0.01em;
     }
 
-    .feature-desc {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.7;
-    }
+    .feature-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
 
     /* ── HOW IT WORKS ── */
     .how {
@@ -433,12 +483,8 @@
       color: var(--white);
     }
 
-    .how-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .how .section-eyebrow { color: var(--accent); }
+    .how-inner { max-width: 1200px; margin: 0 auto; }
+    .how .section-eyebrow { color: var(--lavender); }
     .how .section-title { color: var(--white); margin-bottom: 56px; }
 
     .steps-row {
@@ -456,13 +502,13 @@
       transition: background 0.2s;
     }
 
-    .step-box:hover { background: #252219; }
+    .step-box:hover { background: #22253a; }
 
     .step-num-big {
       font-family: 'Playfair Display', serif;
       font-size: 2.5rem;
       font-weight: 900;
-      color: var(--accent);
+      color: var(--lavender);
       opacity: 0.5;
       line-height: 1;
       margin-bottom: 16px;
@@ -497,17 +543,11 @@
       line-height: 1.05;
     }
 
-    .cta-title em { color: var(--accent); font-style: italic; }
-
+    .cta-title em { color: var(--lavender); font-style: italic; }
     .cta-sub { font-size: 0.95rem; color: var(--muted); margin-top: 14px; }
-
     .cta-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
 
-    .version-tag {
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-family: monospace;
-    }
+    .version-tag { font-size: 0.75rem; color: var(--muted); font-family: monospace; }
 
     /* ── FOOTER ── */
     footer {
@@ -527,15 +567,9 @@
       color: var(--ink);
     }
 
-    .footer-logo span { color: var(--accent); }
+    .footer-logo span { color: var(--lavender); }
 
-    /* ── DIVIDER LINE ── */
-    .divider {
-      height: 1px;
-      background: var(--border);
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    .divider { height: 1px; background: var(--border); max-width: 1200px; margin: 0 auto; }
 
     /* ── ANIMATIONS ── */
     @keyframes slideUp {
@@ -548,11 +582,6 @@
       50% { opacity: 0.4; }
     }
 
-    @keyframes floatCard {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-
     @keyframes floatBadge {
       0%, 100% { transform: translateY(0) rotate(-1deg); }
       50% { transform: translateY(-8px) rotate(1deg); }
@@ -563,12 +592,9 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .reveal {
-      opacity: 0;
-      animation: reveal 0.7s cubic-bezier(.16,1,.3,1) forwards;
-    }
+    .reveal { opacity: 0; animation: reveal 0.7s cubic-bezier(.16,1,.3,1) forwards; }
 
-    /* Responsive */
+    /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       nav { padding: 16px 24px; }
       .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; }
@@ -587,7 +613,7 @@
 
     @media (max-width: 540px) {
       .steps-row { grid-template-columns: 1fr; }
-      .phone { width: 240px; height: 480px; }
+      .phone { width: 240px; height: 500px; }
       .phone-wrap { width: 240px; }
     }
   </style>
@@ -620,71 +646,68 @@
 
       <div class="hero-right">
         <div class="phone-wrap">
-          <!-- Floating badges -->
-          <div class="phone-badge">📊 3h 20m saved today</div>
-          <div class="phone-badge-2">✓ Nudge sent!</div>
+          <div class="phone-badge">✨ Perfect focus today!</div>
+          <div class="phone-badge-2">✓ Nudge sent to contact</div>
 
           <div class="phone">
             <div class="phone-screen">
               <div class="app-screen">
+
+                <!-- Status bar -->
                 <div class="app-statusbar">
-                  <span>9:41</span>
-                  <span>●●● 100%</span>
-                </div>
-                <div class="app-header-txt">Today</div>
-                <div class="app-sub-txt">Tuesday, March 24</div>
-
-                <!-- Usage ring -->
-                <div class="usage-ring-wrap">
-                  <svg class="ring-svg" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#efecea" stroke-width="8"/>
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#d4500a" stroke-width="8"
-                      stroke-dasharray="251.2" stroke-dashoffset="80"
-                      stroke-linecap="round" transform="rotate(-90 50 50)"/>
-                  </svg>
-                  <div class="ring-label">2h 18m</div>
-                  <div class="ring-sub">of 3h daily limit</div>
+                  <span>5:02</span>
+                  <span>▲ ▲ ▲ ▲ ◀ 100%</span>
                 </div>
 
-                <!-- App list -->
-                <div class="app-item">
-                  <div class="app-dot" style="background:#FF6B6B;"></div>
-                  <div class="app-item-info">
-                    <div class="app-item-name">Instagram</div>
-                    <div class="app-item-bar-wrap">
-                      <div class="app-item-bar" style="width:78%;background:#FF6B6B;"></div>
-                    </div>
-                  </div>
-                  <div class="app-item-time">58m</div>
-                </div>
-                <div class="app-item">
-                  <div class="app-dot" style="background:#4ECDC4;"></div>
-                  <div class="app-item-info">
-                    <div class="app-item-name">YouTube</div>
-                    <div class="app-item-bar-wrap">
-                      <div class="app-item-bar" style="width:55%;background:#4ECDC4;"></div>
-                    </div>
-                  </div>
-                  <div class="app-item-time">42m</div>
-                </div>
-                <div class="app-item">
-                  <div class="app-dot" style="background:#45B7D1;"></div>
-                  <div class="app-item-info">
-                    <div class="app-item-name">Twitter</div>
-                    <div class="app-item-bar-wrap">
-                      <div class="app-item-bar" style="width:38%;background:#45B7D1;"></div>
-                    </div>
-                  </div>
-                  <div class="app-item-time">28m</div>
+                <!-- Title -->
+                <div class="app-title-bar">Nudge</div>
+
+                <!-- Greeting card -->
+                <div class="app-greeting">
+                  <div class="app-greeting-name">Hello, Muhammad Saad 👋</div>
+                  <div class="app-greeting-sub">Your focus dashboard</div>
                 </div>
 
-                <!-- Nudge overlay card -->
-                <div class="nudge-overlay">
-                  <div class="nudge-chip">● Nudge</div>
-                  <div class="nudge-overlay-title">Still scrolling?</div>
-                  <div class="nudge-overlay-sub">You've been on Instagram for 30 mins.</div>
-                  <button class="nudge-overlay-btn">Take a Break ✓</button>
+                <!-- Daily nudges card -->
+                <div class="nudge-count-card">
+                  <div class="nudge-sparkles">✦✦</div>
+                  <div class="nudge-count-label">Daily Nudges</div>
+                  <div class="nudge-count-num">0</div>
+                  <div class="nudge-count-sub">Perfect focus!</div>
                 </div>
+
+                <!-- Tracked apps section -->
+                <div class="app-section-label">Tracked Apps</div>
+
+                <!-- Empty state -->
+                <div class="app-empty-state">
+                  <div class="empty-icon">
+                    <div class="empty-icon-sq"></div>
+                    <div class="empty-icon-sq"></div>
+                    <div class="empty-icon-sq"></div>
+                    <div class="empty-icon-sq plus">+</div>
+                  </div>
+                  <div class="empty-title">No apps monitored yet</div>
+                  <div class="empty-sub">Add apps to start staying mindful</div>
+                  <button class="add-first-btn">+ Add your first app</button>
+                </div>
+
+                <!-- Bottom nav -->
+                <div class="app-bottom-nav">
+                  <div class="nav-item">
+                    <div class="nav-item-icon active">🏠</div>
+                    <div class="nav-item-label active">Home</div>
+                  </div>
+                  <div class="nav-item">
+                    <div class="nav-item-icon">📊</div>
+                    <div class="nav-item-label">Progress</div>
+                  </div>
+                  <div class="nav-item">
+                    <div class="nav-item-icon">👥</div>
+                    <div class="nav-item-label">Support</div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -713,8 +736,8 @@
       </div>
       <div class="feature-card">
         <div class="feature-icon">📊</div>
-        <div class="feature-title">Usage Insights</div>
-        <div class="feature-desc">See exactly where your time goes with clean daily breakdowns. No noise — just the data that matters.</div>
+        <div class="feature-title">Progress Tracking</div>
+        <div class="feature-desc">Track daily nudge counts and streaks of mindful days. See your improvement over time with clean, simple stats.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📩</div>
@@ -724,7 +747,7 @@
       <div class="feature-card">
         <div class="feature-icon">⚡</div>
         <div class="feature-title">Breach Tracking</div>
-        <div class="feature-desc">Every override is logged. See your streak of mindful days and how often you chose to stop. Progress you can actually see.</div>
+        <div class="feature-desc">Every override is logged. See how often you chose to stop. Progress you can actually see and act on.</div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🔒</div>
@@ -791,7 +814,6 @@
   </footer>
 
   <script>
-    // Scroll reveal for feature cards
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
         if (e.isIntersecting) {
